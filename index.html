@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE RHINO'S CLUB</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🦏 THE RHINO'S CLUB</h1>
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="about.html">About</a>
+
+<a href="team.html">Team</a>
+
+<a href="events.html">Events</a>
+
+<a href="gallery.html">Gallery</a>
+
+<a href="contact.html">Contact</a>
+
+<button id="mode">
+🌙
+</button>
+
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h2>WELCOME TO THE RHINO'S CLUB</h2>
+
+<p>
+Strength • Fitness • Discipline
+</p>
+
+<a href="events.html" class="b…
+[11:34 AM, 8/4/2026] ❣𓊈Ꭻ𝑦ό♰ᵢ𝑠𝙝ꪑ𝖆ⲡ𓊉❣: <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - THE RHINO'S CLUB</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="form-box">
+
+<h2>Member Login</h2>
+
+<input type="email" id="email" placeholder="Email">
+
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p>
+Don't have an account?
+<a href="signup.html">Signup</a>
+</p>
+
+<p>
+<a href="#" onclick="forgotPassword()">Forgot Password?</a>
+</p>
+
+</div>
+
+<script type="module" src="js/auth.js"></script>
+
+</body>
+</html>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signup</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="form-box">
+
+<h2>Create Account</h2>
+
+<input type="email" id="email" placeholder="Email">
+
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="signup()">Signup</button>
+
+<p>
+Already have an account?
+<a href="login.html">Login</a>
+</p>
+
+</div>
+
+<script type="module" src="js/auth.js"></script>
+
+</body>
+</html>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+export const app = initializeApp(firebaseConfig);
+  import { app } from "./firebase-config.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendPasswordResetEmail
+}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const auth = getAuth(app);
+
+window.signup = function(){
+
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+createUserWithEmailAndPassword(auth,email,password)
+.then(()=>{
+alert("Signup Successful");
+location="login.html";
+})
+.catch(e=>alert(e.message));
+
+}
+
+window.login=function(){
+
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+signInWithEmailAndPassword(auth,email,password)
+.then(()=>{
+alert("Login Successful");
+location="dashboard.html";
+})
+.catch(e=>alert(e.message));
+
+}
+
+window.forgotPassword=function(){
+
+const email=document.getElementById("email").value;
+
+if(!email){
+alert("Enter your email first.");
+return;
+}
+
+sendPasswordResetEmail(auth,email)
+.then(()=>alert("Password reset email sent."))
+.catch(e=>alert(e.message));
+
+}
+  .form-box{
+max-width:400px;
+margin:60px auto;
+padding:25px;
+background:#fff;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+.form-box input{
+width:100%;
+padding:12px;
+margin:10px 0;
+}
+
+.form-box button{
+width:100%;
+padding:12px;
+background:#0d47a1;
+color:white;
+border:none;
+cursor:pointer;
+border-radius:5px;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+
+<h1>🦏 Admin Dashboard</h1>
+
+<button onclick="logout()">Logout</button>
+
+</header>
+
+<section class="cards">
+
+<div class="card">
+<h2 id="members">0</h2>
+<p>Total Members</p>
+</div>
+
+<div class="card">
+<h2 id="events">0</h2>
+<p>Total Events</p>
+</div>
+
+<div class="card">
+<h2 id="payments">₹0</h2>
+<p>Total Collection</p>
+</div>
+
+</section>
+
+<section>
+
+<h2>Quick Menu</h2>
+
+<a href="members.html" class="btn">Manage Members</a>
+
+<a href="events.html" class="btn">Manage Events</a>
+
+<a href="gallery.html" class="btn">Gallery</a>
+
+</section>
+
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Members</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Club Members</h1>
+
+</header>
+
+<section>
+
+<input id="memberName" placeholder="Member Name">
+
+<input id="memberRole" placeholder="Role">
+
+<button onclick="addMember()">Add Member</button>
+
+<table border="1" width="100%" id="table">
+
+<tr>
+
+<th>Name</th>
+
+<th>Role</th>
+
+</tr>
+
+</table>
+
+</section>
+
+<script src="js/dashboard.js"></script>
+
+</body>
+
+</html>
+document.addEventListener("DOMContentLoaded",()=>{
+
+const members=document.getElementById("members");
+const events=document.getElementById("events");
+const payments=document.getElementById("payments");
+
+if(members){
+
+members.innerHTML=25;
+
+events.innerHTML=6;
+
+payments.innerHTML="₹7500";
+
+}
+
+});
+
+function addMember(){
+
+const name=document.getElementById("memberName").value;
+
+const role=document.getElementById("memberRole").value;
+
+if(name==""||role==""){
+
+alert("Fill all fields");
+
+return;
+
+}
+
+let table=document.getElementById("table");
+
+let row=table.insertRow();
+
+row.insertCell(0).innerHTML=name;
+
+row.insertCell(1).innerHTML=role;
+
+document.getElementById("memberName").value="";
+
+document.getElementById("memberRole").value="";
+
+}
+
+function logout(){
+
+alert("Logged Out");
+
+window.location="login.html";
+
+}
+table{
+border-collapse:collapse;
+margin-top:20px;
+background:white;
+}
+
+th,td{
+padding:12px;
+text-align:center;
+}
+
+button{
+padding:10px 20px;
+background:#0d47a1;
+color:white;
+border:none;
+cursor:pointer;
+border-radius:5px;
+margin:5px;
+}
+
+input{
+padding:10px;
+margin:5px;
+width:250px;
+}
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Membership Payment</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+<h1>THE RHINO'S CLUB</h1>
+</header>
+
+<div class="form-box">
+
+<h2>Club Membership</h2>
+
+<p><strong>Joining Fee: ₹300</strong></p>
+
+<input type="text" id="name" placeholder="Full Name">
+
+<input type="email" id="email" placeholder="Email">
+
+<button id="payBtn">Pay ₹300</button>
+
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script type="module" src="js/payment.js"></script>
+
+</body>
+</html>
+import { saveMember } from "./firestore.js";
+
+document.getElementById("payBtn").onclick = async function () {
+
+const name=document.getElementById("name").value;
+const email=document.getElementById("email").value;
+
+if(!name || !email){
+alert("Please fill all fields");
+return;
+}
+
+/*
+IMPORTANT:
+Live Razorpay payment requires:
+1. Your Razorpay Key ID
+2. A backend that creates an Order
+*/
+
+const options={
+key:"YOUR_RAZORPAY_KEY_ID",
+amount:30000,
+currency:"INR",
+name:"THE RHINO'S CLUB",
+description:"Club Membership",
+handler:async function(response){
+
+await saveMember(name,email,response.razorpay_payment_id);
+
+alert("Payment Successful!");
+
+}
+};
+
+const rzp=new Razorpay(options);
+
+rzp.open();
+
+}
+import { app } from "./firebase-config.js";
+
+import {
+
+getFirestore,
+
+collection,
+
+addDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const db=getFirestore(app);
+
+export async function saveMember(name,email,paymentId){
+
+await addDoc(collection(db,"members"),{
+
+name:name,
+
+email:email,
+
+payment:paymentId,
+
+fee:300,
+
+date:new Date()
+
+});
+
+}
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gallery Manager</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+<h1>Gallery Manager</h1>
+</header>
+
+<div class="form-box">
+
+<input type="file" id="image">
+
+<button onclick="uploadImage()">
+Upload Image
+</button>
+
+</div>
+
+<div id="gallery"></div>
+
+<script type="module" src="js/gallery.js"></script>
+
+</body>
+</html>
+import { app } from "./firebase-config.js";
+
+import {
+
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+
+const storage=getStorage(app);
+
+window.uploadImage=async()=>{
+
+const file=document.getElementById("image").files[0];
+
+if(!file){
+
+alert("Select Image");
+
+return;
+
+}
+
+const imageRef=ref(storage,"gallery/"+file.name);
+
+await uploadBytes(imageRef,file);
+
+const url=await getDownloadURL(imageRef);
+
+document.getElementById("gallery").innerHTML+=
+<img src="${url}" width="200">;
+
+alert("Uploaded");
+
+}
+<input
+type="text"
+id="search"
+placeholder="Search Member">
+
+<button onclick="searchMember()">
+Search
+</button>
+  window.searchMember=function(){
+
+const value=document.getElementById("search").value.toLowerCase();
+
+const rows=document.querySelectorAll("table tr");
+
+rows.forEach((row,index)=>{
+
+if(index==0)return;
+
+row.style.display=row.innerText.toLowerCase().includes(value)
+?"":"none";
+
+});
+
+}
+import {
+
+collection,
+
+getDocs
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const snapshot=await getDocs(collection(db,"members"));
+
+document.getElementById("members").innerHTML=snapshot.size;
+if(userRole!="admin"){
+
+window.location="index.html";
+
+}
+npm install -g firebase-tools
+
+firebase login
+
+firebase init
+
+firebase deplo  
